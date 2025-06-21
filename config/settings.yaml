@@ -1,0 +1,159 @@
+# OptionsFlowX Configuration File
+
+# API Configuration
+api:
+  provider: "zerodha"  # Options: zerodha, angel, upstox, paper_trading
+  api_key: "your_api_key_here"
+  api_secret: "your_api_secret_here"
+  access_token: "your_access_token_here"
+  base_url: "https://api.kite.trade"
+  timeout: 30
+
+# Trading Parameters
+trading:
+  symbols: ["NIFTY", "BANKNIFTY"]
+  lot_size: 50
+  max_positions: 5
+  stop_loss_percent: 2.0
+  take_profit_percent: 3.0
+  max_daily_loss: 5000
+  position_sizing_method: "kelly"  # Options: fixed, kelly, martingale
+  risk_per_trade: 0.02  # 2% risk per trade
+
+# Technical Indicators Configuration
+indicators:
+  rsi:
+    period: 14
+    overbought: 70
+    oversold: 30
+    smoothing: 3
+  
+  ema:
+    short_period: 9
+    long_period: 21
+    signal_period: 9
+  
+  vix:
+    threshold: 20
+    lookback_period: 30
+    volatility_multiplier: 1.5
+  
+  macd:
+    fast_period: 12
+    slow_period: 26
+    signal_period: 9
+  
+  bollinger_bands:
+    period: 20
+    std_dev: 2
+
+# Signal Processing
+signal_processing:
+  min_signal_strength: 0.7
+  confirmation_period: 3
+  false_signal_filter: true
+  volume_confirmation: true
+  trend_confirmation: true
+  
+  filters:
+    volatility_filter: true
+    time_filter: true
+    price_filter: true
+    volume_filter: true
+
+# Market Hours (IST)
+market_hours:
+  pre_market_start: "09:00"
+  market_open: "09:15"
+  market_close: "15:30"
+  post_market_end: "15:45"
+  
+  # Trading session preferences
+  prefer_morning_session: true
+  avoid_lunch_hours: true
+  lunch_start: "12:00"
+  lunch_end: "13:00"
+
+# Data Feed Configuration
+data_feed:
+  update_interval: 1  # seconds
+  historical_days: 30
+  real_time_enabled: true
+  websocket_enabled: true
+  retry_attempts: 3
+  retry_delay: 5
+
+# Risk Management
+risk_management:
+  max_drawdown: 0.15  # 15% max drawdown
+  correlation_limit: 0.7
+  sector_exposure_limit: 0.3
+  daily_loss_limit: 5000
+  weekly_loss_limit: 15000
+  monthly_loss_limit: 50000
+  
+  position_sizing:
+    method: "kelly"
+    max_position_size: 0.1  # 10% of portfolio
+    min_position_size: 0.01  # 1% of portfolio
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file_enabled: true
+  console_enabled: true
+  max_file_size: "10MB"
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Performance Monitoring
+monitoring:
+  metrics_enabled: true
+  performance_tracking: true
+  alert_thresholds:
+    drawdown: 0.1
+    consecutive_losses: 5
+    win_rate: 0.4
+
+# Backtesting Configuration
+backtesting:
+  start_date: "2023-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 100000
+  commission: 0.0005  # 0.05% per trade
+  slippage: 0.0001  # 0.01% slippage
+
+# Database Configuration
+database:
+  type: "sqlite"  # Options: sqlite, postgresql, mysql
+  path: "data/trading.db"
+  backup_enabled: true
+  backup_interval: "daily"
+
+# Notification Settings
+notifications:
+  email_enabled: false
+  sms_enabled: false
+  telegram_enabled: false
+  webhook_enabled: false
+  
+  alerts:
+    signal_generated: true
+    position_opened: true
+    position_closed: true
+    stop_loss_hit: true
+    take_profit_hit: true
+    daily_summary: true
+
+# Advanced Settings
+advanced:
+  parallel_processing: true
+  num_workers: 4
+  memory_limit: "2GB"
+  cache_enabled: true
+  cache_ttl: 300  # 5 minutes
+  
+  optimization:
+    genetic_algorithm: false
+    parameter_optimization: false
+    walk_forward_analysis: false 
