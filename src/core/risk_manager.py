@@ -129,6 +129,32 @@ class RiskManager:
             logger.error(f"Error closing position: {e}")
             return False
     
+    def check_stop_loss_take_profit(self, symbol: str, current_price: float) -> Optional[str]:
+        """
+        Check if stop-loss or take-profit is triggered for a position.
+        Returns "STOP_LOSS", "TAKE_PROFIT", or None.
+        """
+        position = self.positions.get(symbol)
+        if not position:
+            return None
+
+        stop_loss_percent = self.trading_config.get('stop_loss_percent', 2.0)
+        entry_price = position['entry_price']
+        signal_type = position['signal_type']
+        threshold = stop_loss_percent / 100.0
+
+        if signal_type == "BUY":
+            if current_price <= entry_price * (1 - threshold):
+                return "STOP_LOSS"
+            elif current_price >= entry_price * (1 + threshold):
+                return "TAKE_PROFIT"
+        elif signal_type == "SELL":
+            if current_price >= entry_price * (1 + threshold):
+                return "STOP_LOSS"
+            elif current_price <= entry_price * (1 - threshold):
+                return "TAKE_PROFIT"
+        return None
+    
     def get_portfolio_summary(self) -> Dict[str, Any]:
         """Get portfolio summary."""
         try:

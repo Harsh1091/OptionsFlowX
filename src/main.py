@@ -12,7 +12,7 @@ from typing import Dict, List, Optional, Any
 from datetime import datetime
 from loguru import logger
 from .core import DataFeed, SignalProcessor, RiskManager
-from .utils.config import get_config, setup_logger_from_config
+from .utils.config import get_config
 from .utils.logger import log_performance_metrics
 
 
@@ -31,9 +31,6 @@ class OptionsFlowX:
         Args:
             config: Configuration dictionary (optional)
         """
-        # Setup logging
-        setup_logger_from_config()
-        
         # Load configuration
         self.config = config or get_config()
         
