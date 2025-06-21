@@ -52,7 +52,7 @@ class BollingerBands:
             Dictionary containing upper, middle, and lower bands
         """
         if isinstance(prices, pd.Series):
-            prices = prices.values
+            prices = np.asarray(prices)
         elif isinstance(prices, list):
             prices = np.array(prices)
         

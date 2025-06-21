@@ -10,6 +10,7 @@ import pandas as pd
 from typing import Union, Optional, Tuple, Dict, Any
 from loguru import logger
 from ..utils.config import get_indicators_config
+from math import erf
 
 
 class VIXIndia:
@@ -172,7 +173,7 @@ class VIXIndia:
     
     def _normal_cdf(self, x: float) -> float:
         """Calculate cumulative distribution function of standard normal distribution."""
-        return 0.5 * (1 + np.math.erf(x / np.sqrt(2)))
+        return 0.5 * (1 + erf(x / np.sqrt(2)))
     
     def _normal_pdf(self, x: float) -> float:
         """Calculate probability density function of standard normal distribution."""
@@ -210,7 +211,7 @@ class VIXIndia:
             # Simple average
             vix = np.mean(valid_vols)
         
-        return vix * 100  # Convert to percentage
+        return float(vix * 100)  # Convert to percentage
     
     def get_volatility_regime(self, vix_value: float) -> str:
         """
