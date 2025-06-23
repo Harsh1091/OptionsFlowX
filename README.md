@@ -172,4 +172,14 @@ This software is for educational and research purposes only. Trading involves su
 For issues and questions:
 - Create an issue on GitHub
 - Check the documentation in the `docs/` folder
-- Review the example configurations 
+- Review the example configurations
+
+## Backtesting
+
+You can now backtest a simple strategy using sample historical data:
+
+```bash
+python src/main.py --backtest
+```
+
+This will run a demonstration backtest using the included `sample_data.csv` file and print a summary of the PnL and trade statistics. You can modify the sample data or strategy logic for your own experiments. 

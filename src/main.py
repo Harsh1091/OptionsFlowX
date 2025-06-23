@@ -8,6 +8,7 @@ for running the high-frequency trading scanner.
 import asyncio
 import signal
 import sys
+import argparse
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 from loguru import logger
@@ -249,7 +250,22 @@ class OptionsFlowX:
 
 
 def main():
-    """Main entry point for CLI."""
+    parser = argparse.ArgumentParser(description='OptionsFlowX Trading System')
+    parser.add_argument('--backtest', action='store_true', help='Run backtest on sample data')
+    args = parser.parse_args()
+
+    if args.backtest:
+        from src.utils.data_loader import load_historical_data
+        from src.core.backtester import Backtester, simple_rsi_ema_strategy
+        import pandas as pd
+        df = load_historical_data('sample_data.csv')
+        # Add prev_close for strategy
+        df['prev_close'] = df['close'].shift(1)
+        df = df.dropna().reset_index(drop=True)
+        backtester = Backtester(simple_rsi_ema_strategy, df)
+        backtester.run()
+        backtester.report()
+        return
     try:
         # Create application
         app = OptionsFlowX()
